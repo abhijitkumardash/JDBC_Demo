@@ -1,0 +1,58 @@
+package org.abhijit.jdbcApp;
+
+import java.sql.*;
+
+public class InsertJDBCDemo 
+{
+	public static void main(String[] args) 
+	{
+		Connection conn=null;
+		Statement stmt=null;
+		
+		String qry="insert into demodata1.studentdetails values(3,'soumya',59.95)";
+		try 
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Driver class Loaded & Registered");
+			
+			conn=DriverManager.getConnection("jdbc:mysql://localhost:3306?user=root&password=abhijit");
+			System.out.println("Connection Established with DB Server");
+			
+			stmt=conn.createStatement();
+			System.out.println("Platform Created");
+			
+			stmt.executeUpdate(qry);
+			System.out.println("Data Inserted");
+		} 
+		catch (ClassNotFoundException | SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		finally
+		{
+			if(stmt!=null)
+			{
+				try 
+				{
+					stmt.close();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			if(conn!=null)
+			{
+				try 
+				{
+					conn.close();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}
